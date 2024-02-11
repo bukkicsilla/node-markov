@@ -28,7 +28,6 @@ class MarkovMachine {
         d[this.words[i]] = [this.words[i + 1] || null];
       }
     }
-    //console.log(d);
     this.d = d;
   }
 
