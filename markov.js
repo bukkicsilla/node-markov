@@ -1,13 +1,11 @@
 /** Textual markov chain generator */
 
-
 class MarkovMachine {
-
   /** build markov machine; read in text.*/
 
   constructor(text) {
     let words = text.split(/[ \r\n]+/);
-    this.words = words.filter(c => c !== "");
+    this.words = words.filter((c) => c !== "");
     this.makeChains();
   }
 
@@ -18,12 +16,29 @@ class MarkovMachine {
 
   makeChains() {
     // TODO
+    let d = {};
+    let le = this.words.length;
+    let lst;
+    for (let i = 0; i < le; i++) {
+      if (this.words[i] in d) {
+        lst = d[this.words[i]];
+        lst.push(this.words[i + 1] || null);
+        d[this.words[i]] = lst;
+      } else {
+        d[this.words[i]] = [this.words[i + 1] || null];
+      }
+    }
+    console.log(d);
+    return d;
   }
 
-
+  static choice(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
   /** return random text from chains */
 
   makeText(numWords = 100) {
     // TODO
   }
 }
+module.exports = { MarkovMachine };
