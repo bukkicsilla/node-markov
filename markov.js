@@ -28,8 +28,8 @@ class MarkovMachine {
         d[this.words[i]] = [this.words[i + 1] || null];
       }
     }
-    console.log(d);
-    return d;
+    //console.log(d);
+    this.d = d;
   }
 
   static choice(arr) {
@@ -39,6 +39,18 @@ class MarkovMachine {
 
   makeText(numWords = 100) {
     // TODO
+    const result = [];
+    let word = MarkovMachine.choice(Object.keys(this.d));
+    result.push(word);
+    for (let i = 0; i < numWords - 1; i++) {
+      let newWord = MarkovMachine.choice(this.d[word]);
+      if (!newWord) {
+        return result.join(" ");
+      }
+      result.push(newWord);
+      word = newWord;
+    }
+    return result.join(" ");
   }
 }
 module.exports = { MarkovMachine };
